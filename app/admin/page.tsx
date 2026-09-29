@@ -1,13 +1,17 @@
 'use client'
 import { FormEvent, useState } from 'react'
 import { createClient } from '@supabase/supabase-js'
+
+const DEFAULT_SUPABASE_URL='https://runblmanbuotldxelopf.supabase.co'
+const DEFAULT_SUPABASE_PUBLISHABLE_KEY='sb_publishable_IgnEb3GnY1EPGgX4F0EB_g_JejnA6EM'
 type Course='foundation'|'intermediate'
+
 export default function AdminPage(){
   const [email,setEmail]=useState(''); const [password,setPassword]=useState(''); const [token,setToken]=useState(''); const [status,setStatus]=useState('')
   const [course,setCourse]=useState<Course>('foundation'); const [confirmWord,setConfirmWord]=useState(''); const [file,setFile]=useState<File|null>(null)
   const [form,setForm]=useState({registration_number:'',student_name:'',father_husband_name:'',date_of_birth:'',mobile:'',email:'',city:'',pin_code:''})
-  async function login(e:FormEvent){e.preventDefault();setStatus('Signing in…'); const url=process.env.NEXT_PUBLIC_SUPABASE_URL; const key=process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-    if(!url||!key)return setStatus('Supabase is not configured.'); const supabase=createClient(url,key); const {data,error}=await supabase.auth.signInWithPassword({email,password})
+  async function login(e:FormEvent){e.preventDefault();setStatus('Signing in…'); const url=process.env.NEXT_PUBLIC_SUPABASE_URL||DEFAULT_SUPABASE_URL; const key=process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY||DEFAULT_SUPABASE_PUBLISHABLE_KEY
+    const supabase=createClient(url,key); const {data,error}=await supabase.auth.signInWithPassword({email,password})
     if(error||!data.session)return setStatus(error?.message||'Login failed'); setToken(data.session.access_token);setStatus('Signed in.')}
   async function upload(e:FormEvent){e.preventDefault(); if(!file)return setStatus('Select an Excel file first.'); if(confirmWord.trim().toLowerCase()!==course)return setStatus(`Type ${course} exactly to confirm.`)
     setStatus('Uploading…'); const fd=new FormData();fd.set('file',file);fd.set('course',course);fd.set('confirmation',confirmWord); const res=await fetch('/api/admin/upload',{method:'POST',headers:{authorization:`Bearer ${token}`},body:fd}); const data=await res.json();setStatus(res.ok?`Done. ${data.processed} records processed.`:data.error)}
