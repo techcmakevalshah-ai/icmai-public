@@ -19,7 +19,7 @@ export default function Finder() {
   async function submit(e: FormEvent) {
     e.preventDefault()
     const q = query.trim()
-    if (q.length < 2) return setMessage('Enter at least 2 characters.')
+    if (q.length < 2) return setMessage('Enter your full student name, registered mobile number, or registration number.')
     setLoading(true); setSearched(true); setMessage('')
     try {
       const res = await fetch('/api/search', {
@@ -30,7 +30,7 @@ export default function Finder() {
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Search failed')
       setResults(data.results || [])
-      setMessage(data.results?.length ? '' : 'No matching student found. Check the spelling or try the registered mobile number.')
+      setMessage(data.results?.length ? '' : 'No matching student found. Enter the full student name or try the registered mobile number.')
     } catch (err) {
       setResults([])
       setMessage(err instanceof Error ? err.message : 'Search failed')
@@ -49,7 +49,7 @@ export default function Finder() {
         <section className="finder-card">
           <div className="eyebrow">Surat ICMAI - Students Service</div>
           <h1>Find your registration number</h1>
-          <p className="lead">Search using your student name, registered mobile number, or registration number.</p>
+          <p className="lead">Search using your full student name, registered mobile number, or registration number.</p>
           <form onSubmit={submit} className="search-row">
             <input
               autoFocus
@@ -60,7 +60,7 @@ export default function Finder() {
               spellCheck={false}
               value={query}
               onChange={(e)=>setQuery(e.target.value)}
-              placeholder="e.g. student name or mobile number"
+              placeholder="Full student name or registered mobile"
               aria-label="Search students"
             />
             <button disabled={loading} aria-busy={loading}>{loading ? 'Searching…' : 'Search'}</button>
@@ -79,11 +79,7 @@ export default function Finder() {
                   <div className="reg-block">
                     <span>Registration No.</span>
                     <strong>{item.registration_number}</strong>
-                    <button
-                      type="button"
-                      className="copy"
-                      onClick={()=>copyRegistration(item.registration_number)}
-                    >
+                    <button type="button" className="copy" onClick={()=>copyRegistration(item.registration_number)}>
                       {copied===item.registration_number ? 'Copied' : 'Copy'}
                     </button>
                   </div>
