@@ -1,9 +1,11 @@
 import { createClient } from '@supabase/supabase-js'
 
+const DEFAULT_SUPABASE_URL = 'https://runblmanbuotldxelopf.supabase.co'
+const DEFAULT_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_IgnEb3GnY1EPGgX4F0EB_g_JejnA6EM'
+
 function config() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-  if (!url || !key) throw new Error('Missing Supabase environment variables')
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || DEFAULT_SUPABASE_URL
+  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || DEFAULT_SUPABASE_PUBLISHABLE_KEY
   return { url, key }
 }
 export function getPublicSupabase() {
