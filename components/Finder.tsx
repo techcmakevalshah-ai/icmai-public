@@ -69,9 +69,9 @@ export default function Finder() {
           <aside className="branding" aria-label="CMA Keval Shah, Chairman">
             <img className="branding-photo" src="/keval-profile.svg" alt="CMA Keval Shah" />
             <div className="branding-copy">
+              <em>All the Best</em>
               <strong>CMA KEVAL SHAH</strong>
               <span>Chairman</span>
-              <em>All the Best</em>
             </div>
           </aside>
         )}
