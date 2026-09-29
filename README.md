@@ -16,3 +16,6 @@ Next.js + Supabase application for students to find registration numbers by name
 
 ## Admin
 Open /admin for manual student entry or Excel upload. The blank upload template can be downloaded from the admin page.
+
+## Deployment
+Production is deployed from the `main` branch through Vercel's GitHub integration.
