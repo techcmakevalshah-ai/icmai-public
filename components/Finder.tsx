@@ -40,7 +40,7 @@ export default function Finder() {
     <main className="shell">
       <div className={`finder-layout ${searched ? 'has-branding' : ''}`}>
         <section className="finder-card">
-          <div className="eyebrow">ICMAI • Student Service</div>
+          <div className="eyebrow">Surat ICMAI - Students Service</div>
           <h1>Find your registration number</h1>
           <p className="lead">Search using your student name, registered mobile number, or registration number.</p>
           <form onSubmit={submit} className="search-row">
