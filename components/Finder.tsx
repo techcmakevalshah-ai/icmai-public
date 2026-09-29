@@ -38,32 +38,44 @@ export default function Finder() {
 
   return (
     <main className="shell">
-      <section className="finder-card">
-        <div className="eyebrow">ICMAI • Student Service</div>
-        <h1>Find your registration number</h1>
-        <p className="lead">Search using your student name, registered mobile number, or registration number.</p>
-        <form onSubmit={submit} className="search-row">
-          <input autoFocus value={query} onChange={(e)=>setQuery(e.target.value)}
-            placeholder="e.g. student name or mobile number" aria-label="Search students" />
-          <button disabled={loading}>{loading ? 'Searching…' : 'Search'}</button>
-        </form>
-        <p className="privacy-note">For privacy, only name, course and registration number are shown.</p>
-        {message && <div className="message">{message}</div>}
-        {results.length > 0 && (
-          <div className="results" aria-live="polite">
-            <div className="results-head">{results.length} match{results.length===1?'':'es'}</div>
-            {results.map((item)=>(
-              <article className="result-card" key={item.course+'-'+item.registration_number}>
-                <div><div className="student-name">{item.student_name}</div><div className="course">{item.course==='foundation'?'Foundation':'Intermediate'}</div></div>
-                <div className="reg-block"><span>Registration No.</span><strong>{item.registration_number}</strong>
-                  <button type="button" className="copy" onClick={()=>navigator.clipboard.writeText(item.registration_number)}>Copy</button>
-                </div>
-              </article>
-            ))}
-          </div>
+      <div className={`finder-layout ${searched ? 'has-branding' : ''}`}>
+        <section className="finder-card">
+          <div className="eyebrow">ICMAI • Student Service</div>
+          <h1>Find your registration number</h1>
+          <p className="lead">Search using your student name, registered mobile number, or registration number.</p>
+          <form onSubmit={submit} className="search-row">
+            <input autoFocus value={query} onChange={(e)=>setQuery(e.target.value)}
+              placeholder="e.g. student name or mobile number" aria-label="Search students" />
+            <button disabled={loading}>{loading ? 'Searching…' : 'Search'}</button>
+          </form>
+          <p className="privacy-note">For privacy, only name, course and registration number are shown.</p>
+          {message && <div className="message">{message}</div>}
+          {results.length > 0 && (
+            <div className="results" aria-live="polite">
+              <div className="results-head">{results.length} match{results.length===1?'':'es'}</div>
+              {results.map((item)=>(
+                <article className="result-card" key={item.course+'-'+item.registration_number}>
+                  <div><div className="student-name">{item.student_name}</div><div className="course">{item.course==='foundation'?'Foundation':'Intermediate'}</div></div>
+                  <div className="reg-block"><span>Registration No.</span><strong>{item.registration_number}</strong>
+                    <button type="button" className="copy" onClick={()=>navigator.clipboard.writeText(item.registration_number)}>Copy</button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </section>
+
+        {searched && (
+          <aside className="branding" aria-label="CMA Keval Shah, Chairman">
+            <img className="branding-photo" src="/keval-profile.svg" alt="CMA Keval Shah" />
+            <div className="branding-copy">
+              <strong>CMA KEVAL SHAH</strong>
+              <span>Chairman</span>
+              <em>All the Best</em>
+            </div>
+          </aside>
         )}
-      </section>
-      {searched && <aside className="branding"><strong>CMA KEVAL SHAH</strong><span>Chairman</span><em>All the Best</em></aside>}
+      </div>
     </main>
   )
 }
