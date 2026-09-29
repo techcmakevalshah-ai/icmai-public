@@ -49,7 +49,7 @@ export default function Finder() {
         <section className="finder-card">
           <div className="eyebrow">Surat ICMAI - Students Service</div>
           <h1>Find your registration number</h1>
-          <p className="lead">Search using your full student name, registered mobile number, or registration number.</p>
+          <p className="lead">Search using your full student name or registered mobile number.</p>
           <form onSubmit={submit} className="search-row">
             <input
               autoFocus
