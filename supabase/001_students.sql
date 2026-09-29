@@ -46,7 +46,7 @@ begin
     return query
       select s.registration_number, s.student_name, s.course
       from public.students s
-      where s.mobile_hash = encode(digest(right(digits,10),'sha256'),'hex')
+      where s.mobile_hash = encode(extensions.digest(right(digits,10),'sha256'),'hex')
       order by s.student_name
       limit 10;
 
